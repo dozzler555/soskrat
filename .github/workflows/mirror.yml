@@ -34,17 +34,17 @@ jobs:
           git clone https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/${{ secrets.MIRROR_REPOSLUG }} source
 
       - name: Compile The Mirroring Docker Container
-        run: |
-          cd source || exit 1
-          docker container prune --force || true
-          docker build . --rm --force-rm --compress --no-cache=true --pull --file Dockerfile -t public-leech
-          docker image ls
-
-      - name: running Docker
         timeout-minutes: 340
         continue-on-error: true
         run: |
-          docker run --privileged --rm -i public-leech
+          cd source || exit 1
+          sudo apt install --no-install-recommends -y curl git libffi-dev libjpeg-dev libwebp-dev python3-lxml python3-psycopg2 libpq-dev libcurl4-openssl-dev libxml2-dev libxslt1-dev python3-pip python3-sqlalchemy openssl wget python3 python3-dev libreadline-dev libyaml-dev gcc zlib1g ffmpeg libssl-dev libgconf-2-4 libxi6 unzip libopus0 libopus-dev python3-venv libmagickwand-dev pv tree mediainfo
+          virtualenv venv
+          source venv/bin/activate
+          pip3 install telethon
+          pip3 install -r requirements.txt
+          python3 -m userbot
+          
 
       - name: Loop Workflow
         continue-on-error: true

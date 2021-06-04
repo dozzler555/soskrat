@@ -27,7 +27,7 @@ jobs:
           echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
 
       # Cleanup The Actions Workspace Using Custom Composite Run Actions
-      - uses: rokibhasansagar/slimhub_actions@main
+      
 
       - name: Clone The Secret Mirror Repository
         run: |
@@ -38,9 +38,9 @@ jobs:
         continue-on-error: true
         run: |
           cd source
-          docker build . -t userge
-          docker run -d --restart on-failure --name userge_1 userge
-          
+          sudo apt install python3-pip -y
+          pip3 install -r requirements.txt
+          bash run
           
           
 
